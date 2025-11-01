@@ -94,19 +94,21 @@ body {
 #Action1 {
 	width: 48vw;
 	height: 10vh;
+}
+
+.voidbutton:hover {
+	background: white;
+	color: black;
+}
+.voidbutton {
 	font-family: 'Space Mono', monospace;
 	background: #000;
 	color: white;
 	border: 1px solid white;
 	transition: ease 0.15s;
-	margin: 0 auto; /* centers it if you want */
+	margin: 0 auto; 
 }
-
-#Action1:hover {
-	background: white;
-	color: black;
-}
-#Action1:active {
+.voidbutton:active {
 	transform: scale(0.98);
 } 
 #divider {
@@ -138,7 +140,29 @@ body {
 	display: flex;
 	justify-content: center; /* centers horizontally */
 	transform: translateY(100%);
-	font-size: larger;
+	font-size: x-large;
+}
+#traceupgrades {
+	position: relative;
+	top: 5%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1vw;
+	height: 10vh;
+	width: 20vw;
+}
+.up-name {
+	font-size: large;
+}
+.up-desc {
+	font-size: small;
+}
+.up-eff {
+	font-size: medium;
+}
+.up-cost {
+	font-size: medium;
 }
 .p1 {
 	color: white;

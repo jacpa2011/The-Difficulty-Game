@@ -15,13 +15,21 @@
             <img src="divider.png" id="divider" />
         </div>
     <div id="right-side-container">
-        <button id="Action1">
+        <button id="Action1" class="voidbutton" onclick="Action(1)">
             <p>Stare into the abyss.</p>
         </button>
         <div id="action1progressbar">
             <div id="action1pbui"></div>
         </div>
         <p id="tracesdisplay" class="p1">Traces: <span id="traces"></span></p>
+        <div id="traceupgrades">
+            <button class="voidbutton" onclick="BuyTraceUp(1)">
+                <div class="up-name">&lt;Metabolism|</div>
+                <div class="up-desc">Duplicate yourself to do an action multiple times in one go.</div>
+                <div class="up-eff">Effect: x<span id="up1-eff"></span> Traces</div>
+                <div class="up-cost">Cost: <span id="up1-cost"></span> Traces</div>
+            </button>
+        </div>
     </div>
     <div id="bottom-gradient"></div>
     <script src="break_eternity.js"></script>

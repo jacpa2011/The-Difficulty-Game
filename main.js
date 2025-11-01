@@ -3,14 +3,21 @@ const difficultytext = document.getElementById('difficultyname');
 
 const player = { 
     difficulty: new Decimal(1),
-    existancerank: new Decimal(-1),
+    existencerank: new Decimal(-1),
     void: {
         action1: {
             progress: new Decimal(0),
             duration: new Decimal(3),
-            gain: new Decimal(1),
             active: false,
         },
+        traceupgrades: {
+            0: {
+                amount: new Decimal(0),
+                cost: new Decimal(10),
+                effect: new Decimal(1),
+            }
+        },
+        totaltraces: new Decimal(0),
         traces: new Decimal(0)
     }
 };
@@ -75,13 +82,24 @@ function handleVisibilityChange() {
     }
 }
 
-function Action1() {
-    if (player.void.action1.active) return;    
-    player.void.action1.active = true;
-    player.void.action1.progress = new Decimal(0);
+function Action(id) {
+    if (id == 1) {
+        if (player.void.action1.active) return;    
+        player.void.action1.active = true;
+        player.void.action1.progress = new Decimal(0);
+    }
 }
-const Action1Button = document.getElementById('Action1');
-Action1Button.addEventListener('click', Action1);
+function BuyTraceUp(id) {
+    const up = player.void.traceupgrades;
+    if (id == 1) {
+        if (player.void.traces.gte(up[0].cost)) {
+            player.void.traces = player.void.traces.sub(up[0].cost);
+            up[0].amount = up[0].amount.add(1);
+            up[0].effect = new Decimal(2).pow(up[0].amount)
+            up[0].cost = new Decimal(10).mul(new Decimal(2.25).pow(up[0].amount));
+        }
+    }
+}
 document.addEventListener('visibilitychange', handleVisibilityChange);
 handleVisibilityChange();
 animateSquares();
