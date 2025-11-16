@@ -9,11 +9,17 @@ const player = {
             progress: new Decimal(0),
             duration: new Decimal(3),
             active: false,
+            totalpressed: new Decimal(0),
         },
         traceupgrades: {
             0: {
-                amount: new Decimal(0),
+                level: new Decimal(0),
                 cost: new Decimal(10),
+                effect: new Decimal(1),
+            },
+            1: {
+                bought: false,
+                cost: new Decimal(50),
                 effect: new Decimal(1),
             }
         },
@@ -90,14 +96,24 @@ function Action(id) {
     }
 }
 function BuyTraceUp(id) {
-    const up = player.void.traceupgrades;
-    if (id == 1) {
-        if (player.void.traces.gte(up[0].cost)) {
-            player.void.traces = player.void.traces.sub(up[0].cost);
-            up[0].amount = up[0].amount.add(1);
-            up[0].effect = new Decimal(2).pow(up[0].amount)
-            up[0].cost = new Decimal(10).mul(new Decimal(2.25).pow(up[0].amount));
+    const up = player.void.traceupgrades[id-1];
+    if (!up) return; // invalid upgrade id
+    // check if it's a one-time upgrade and already bought
+    if (up.bought) return;
+    // check cost
+    if (!player.void.traces.gte(up.cost)) return;
+    // pay cost
+    player.void.traces = player.void.traces.sub(up.cost);
+
+    // apply upgrade depending on type
+    if ("bought" in up) {
+        up.bought = true;
+        const upgrade = document.getElementById(`up${id}`);
+        if (upgrade) {
+            upgrade.classList.add('voidbought');
         }
+    } else {
+        up.level = up.level.add(1);
     }
 }
 document.addEventListener('visibilitychange', handleVisibilityChange);

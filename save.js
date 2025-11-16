@@ -10,11 +10,13 @@ function Save() {
         saveitems('player.void.traces', player.void.traces);
         saveitems('player.void.totaltraces', player.void.totaltraces);
         saveitems('player.void.action1.active', player.void.action1.active);
-        saveitems('player.void.action1.progress', player.void.action1.progress);  
+        saveitems('player.void.action1.progress', player.void.action1.progress); 
+        saveitems('player.void.action1.totalpressed', player.void.action1.totalpressed); 
         for(let i = 0; i < Object.keys(player.void.traceupgrades).length; i++) {
-            saveitems(`player.void.traceupgrades[${i}].amount`, player.void.traceupgrades[i].amount);
+            if (player.void.traceupgrades[i].level) saveitems(`player.void.traceupgrades[${i}].level`, player.void.traceupgrades[i].level);
             saveitems(`player.void.traceupgrades[${i}].cost`, player.void.traceupgrades[i].cost);
-            saveitems(`player.void.traceupgrades[${i}].effect`, player.void.traceupgrades[i].effect);
+            if (player.void.traceupgrades[i].eff) saveitems(`player.void.traceupgrades[${i}].effect`, player.void.traceupgrades[i].effect);
+            if (player.void.traceupgrades[i].hasOwnProperty("bought")) saveitems(`player.void.traceupgrades[${i}].bought`, player.void.traceupgrades[i].bought);
         }
     }
 }
@@ -47,25 +49,19 @@ function Get() {
         player.void.totaltraces = GetItems('player.void.totaltraces', true);
         player.void.action1.active = GetItems('player.void.action1.active', false);
         player.void.action1.progress = GetItems('player.void.action1.progress', true);
-        player.void.traceupgrades[0].amount = GetItems('player.void.traceupgrades[0].amount', true);
-        player.void.traceupgrades[0].cost = GetItems('player.void.traceupgrades[0].cost', true);
-        player.void.traceupgrades[0].effect = GetItems('player.void.traceupgrades[0].effect', true);    
-        for (let i = 0; i < Object.keys(player.void.traceupgrades).length; i++) {  
-            player.void.traceupgrades[i].amount = GetItems(`player.void.traceupgrades[${i}].amount`, true);
+        player.void.action1.totalpressed = GetItems('player.void.action1.totalpressed', true);   
+        for(let i = 0; i < Object.keys(player.void.traceupgrades).length; i++) {
+            if (player.void.traceupgrades[i].level) player.void.traceupgrades[i].level = GetItems(`player.void.traceupgrades[${i}].level`, true);
             player.void.traceupgrades[i].cost = GetItems(`player.void.traceupgrades[${i}].cost`, true);
-            player.void.traceupgrades[i].effect = GetItems(`player.void.traceupgrades[${i}].effect`, true);
-        }   
+            if (player.void.traceupgrades[i].effect) player.void.traceupgrades[i].effect = GetItems(`player.void.traceupgrades[${i}].effect`, true);
+            if (player.void.traceupgrades[i].hasOwnProperty("bought")) player.void.traceupgrades[i].bought = GetItems(`player.void.traceupgrades[${i}].bought`, false);
+        }
     } else {
         Save()
     }}
 }
-let isHardResetting = false;
 function HardReset() {
-    isHardResetting = true;
     localStorage.clear(); // wipe localstorage
     location.reload(true)
 }
-window.addEventListener('beforeunload', () => {
-    if (!isHardResetting) Save();
-});
 setInterval(Save, 15000); // autosave every 15 seconds

@@ -3,10 +3,18 @@ function UpdateDisplay() {
     if (traces) {
         traces.textContent = format(player.void.traces);
     }
-    const up1eff = document.getElementById('up1-eff');
-    const up1cost = document.getElementById('up1-cost');   
-    up1eff.textContent = format(player.void.traceupgrades[0].effect);
-    up1cost.textContent = format(player.void.traceupgrades[0].cost);
+    for(let i = 0; i < Object.keys(player.void.traceupgrades).length; i++) {
+        const upeff = document.getElementById(`up${i+1}-eff`);
+        const upcost = document.getElementById(`up${i+1}-cost`);
+        const uplvl = document.getElementById(`up${i+1}-lvl`);
+        if (uplvl) {
+            uplvl.textContent = format(player.void.traceupgrades[i].level, 0);
+        }
+        upcost.textContent = format(player.void.traceupgrades[i].cost);
+        if (upeff) {
+        upeff.textContent = format(player.void.traceupgrades[i].effect);
+        }
+    }
 }
 function UpdateStyles() {
     const progressBarUI = document.getElementById('action1pbui');
@@ -21,16 +29,39 @@ function UpdateStyles() {
 }
 function CalculateTraceGain() {
     let tracegain = new Decimal(1);
-    tracegain = tracegain.mul(player.void.traceupgrades[0].effect);
+    const up = player.void.traceupgrades;
+    tracegain = tracegain.mul(up[0].effect);
+    if (up[1].bought) {
+        tracegain = tracegain.mul(up[1].effect);
+    }
     return tracegain;
 }
+function CalculateUpgrade() {
+    const up = player.void.traceupgrades;
+    up[0].effect = new Decimal(2).pow(up[0].level);
+    up[1].effect = player.void.action1.totalpressed.add(1).pow(0.5);
+    up[0].cost = new Decimal(10).mul(new Decimal(2.25).pow(up[0].level));
+    up[1].cost = new Decimal(50)
+    for(let i = 0; i < Object.keys(player.void.traceupgrades).length; i++) {
+        const upgrade = document.getElementById(`up${i+1}`);
+        if (upgrade) {
+            if (up[i].bought) {
+                upgrade.classList.add('voidbought');
+            } else {
+                upgrade.classList.remove('voidbought');
+            }
+        }
+    }
+}
 function productionloop(diff) {
+    CalculateUpgrade();
     let tracegain = CalculateTraceGain();
     if (player.void.action1.active) {
         player.void.action1.progress = player.void.action1.progress.add(new Decimal(diff));
         if (player.void.action1.progress.gte(player.void.action1.duration)) {
             player.void.traces = player.void.traces.add(tracegain);
             player.void.totaltraces = player.void.totaltraces.add(tracegain);
+            player.void.action1.totalpressed = player.void.action1.totalpressed.add(1);
             player.void.action1.active = false;
             player.void.action1.progress = new Decimal(0);
         }

@@ -100,6 +100,12 @@ body {
 	background: white;
 	color: black;
 }
+.voidbutton:hover .up-name {
+	border-bottom-color: #000;
+}
+.voidbought .up-name {
+	border-bottom-color: #000;
+}
 .voidbutton {
 	font-family: 'Space Mono', monospace;
 	background: #000;
@@ -107,6 +113,7 @@ body {
 	border: 1px solid white;
 	transition: ease 0.15s;
 	margin: 0 auto; 
+	width: 15vw;
 }
 .voidbutton:active {
 	transform: scale(0.98);
@@ -148,21 +155,34 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	gap: 1vw;
+	gap: 1px;
 	height: 10vh;
-	width: 20vw;
+	width: 50vw;
 }
 .up-name {
-	font-size: large;
+	font-size: x-large;
+	border-bottom: 2px solid #fff; 
+	padding: 10px 0;
+	transition: ease 0.15s;
 }
 .up-desc {
 	font-size: small;
+	padding: 10px 0;
 }
 .up-eff {
 	font-size: medium;
 }
 .up-cost {
 	font-size: medium;
+}
+.up-amt {
+	font-size: medium;
+	padding: 1px 4px;
+}
+.voidbought {
+	background: white;
+	color: black;
+	border: 1px solid black;
 }
 .p1 {
 	color: white;

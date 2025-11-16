@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeto</title>
+    <title>The Difficulty Game</title>
     <link rel="stylesheet" href="css.css">
 </head>
 <body onload="Get()">
@@ -28,6 +28,13 @@
                 <div class="up-desc">Duplicate yourself to do an action multiple times in one go.</div>
                 <div class="up-eff">Effect: x<span id="up1-eff"></span> Traces</div>
                 <div class="up-cost">Cost: <span id="up1-cost"></span> Traces</div>
+                <div class="up-amt">Level: <span id="up1-lvl"></span> / ∞</div>
+            </button>
+            <button class="voidbutton" id="up2" onclick="BuyTraceUp(2)">
+                <div class="up-name">&lt;Applied Knowledge|</div>
+                <div class="up-desc">Concentrate previous experiences to get more Traces. <br> The total amount of times you did an action multiplies Traces.</div>
+                <div class="up-eff">Effect: x<span id="up2-eff"></span> Traces</div>
+                <div class="up-cost">Cost: <span id="up2-cost"></span> Traces</div>
             </button>
         </div>
     </div>
