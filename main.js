@@ -3,7 +3,7 @@ const difficultytext = document.getElementById('difficultyname');
 
 const player = { 
     difficulty: new Decimal(1),
-    existencerank: new Decimal(-1),
+    existencerank: "?̴̨͙̠̼̖̯̓͌̎̈́̏̈́͊̅̾̈̆͐̈́̕͝ͅ?̴̰̖̜̰̱̮̝̫̖͈̓͛̔̓?̴̱̯͍͕̹̻̅̀̀̾̈́̾̓̀̊̔͆̌̕̕͜͝?̴͈̞̏,",
     void: {
         action1: {
             progress: new Decimal(0),
@@ -21,10 +21,18 @@ const player = {
                 bought: false,
                 cost: new Decimal(50),
                 effect: new Decimal(1),
+            },
+            2: {
+                bought: false,
+                cost: new Decimal(5000),
             }
         },
         totaltraces: new Decimal(0),
-        traces: new Decimal(0)
+        traces: new Decimal(0),
+
+        pulses: new Decimal(0),
+        totalpulses: new Decimal(0),
+        timepassed: new Decimal(0),
     }
 };
 
@@ -97,8 +105,7 @@ function Action(id) {
 }
 function BuyTraceUp(id) {
     const up = player.void.traceupgrades[id-1];
-    if (!up) return; // invalid upgrade id
-    // check if it's a one-time upgrade and already bought
+    if (!up) return;
     if (up.bought) return;
     // check cost
     if (!player.void.traces.gte(up.cost)) return;

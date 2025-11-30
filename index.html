@@ -11,8 +11,11 @@
         <img src="Difficulties/-1/Tfird.png" id="Difficulty" />
     </div>
     <div>
-        <div id="image-container">
-            <img src="divider.png" id="divider" />
+        <div id="left-side-container">
+                <div id="image-container">
+                <img src="divider.png" id="divider" />
+            </div>
+            <div class="display existencerankdisplay">Your existence rank is currently: existence-<span id="existencerank" style="font-style: italic; color: red; filter: blur(1px);"></span></div>
         </div>
     <div id="right-side-container">
         <button id="Action1" class="voidbutton" onclick="Action(1)">
@@ -21,7 +24,7 @@
         <div id="action1progressbar">
             <div id="action1pbui"></div>
         </div>
-        <p id="tracesdisplay" class="p1">Traces: <span id="traces"></span></p>
+        <p id="tracesdisplay" class="display">Traces: <span id="traces"></span></p>
         <div id="traceupgrades">
             <button class="voidbutton" onclick="BuyTraceUp(1)">
                 <div class="up-name">&lt;Metabolism|</div>
@@ -36,7 +39,18 @@
                 <div class="up-eff">Effect: x<span id="up2-eff"></span> Traces</div>
                 <div class="up-cost">Cost: <span id="up2-cost"></span> Traces</div>
             </button>
+            <button class="voidbutton" id="up3" onclick="BuyTraceUp(3)">
+                <div class="up-name">&lt;Temporal Continuum|</div>
+                <div class="up-desc">Create a constant heartbeat within you. Discover Time.</div>
+                <div class="up-cost">Cost: <span id="up3-cost"></span> Traces</div>
+            </button>
         </div>
+        <div id="Time">
+            <p id="TimeTitle">Time</p>
+            <p class="display">Pulses: <span id="pulses"></span> (1/s)</p>
+            <p class="display">Time Passed: <span id="seconds"></span>s</p>
+        </div>
+    </div>
     </div>
     <div id="bottom-gradient"></div>
     <script src="break_eternity.js"></script>

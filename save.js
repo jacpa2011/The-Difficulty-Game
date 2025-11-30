@@ -44,7 +44,7 @@ function Get() {
     if (localStorage) {
     if (!isFirstVisit()) {
         player.difficulty = GetItems('player.difficulty', true);
-        player.existencerank = GetItems('player.existencerank', true);
+        player.existencerank = GetItems('player.existencerank', false);
         player.void.traces = GetItems('player.void.traces', true);
         player.void.totaltraces = GetItems('player.void.totaltraces', true);
         player.void.action1.active = GetItems('player.void.action1.active', false);
