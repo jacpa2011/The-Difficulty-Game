@@ -15,6 +15,7 @@ const player = {
             0: {
                 level: new Decimal(0),
                 cost: new Decimal(10),
+                scaling1: new Decimal(10),
                 effect: new Decimal(1),
             },
             1: {

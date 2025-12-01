@@ -60,6 +60,45 @@ function Get() {
         Save()
     }}
 }
+async function expor() {
+    try {
+        const savedData = {};
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          savedData[key] = localStorage.getItem(key);
+        }
+    
+        // Convert to JSON
+        const jsonData = JSON.stringify(savedData, null, 2);
+    
+        // Copy to clipboard
+        await navigator.clipboard.writeText(btoa(jsonData));
+        alert('Save data exported to clipboard!');
+      } catch (error) {
+        alert('An error occurred during export. Report this in the Discord server.');
+      }
+}
+
+async function impor() {
+    try {
+        // Read clipboard text
+        clipboardData = await importdata.value
+        clipboardData = atob(clipboardData)
+        const importedData = JSON.parse(clipboardData);
+    
+        // Restore to localStorage
+        localStorage.clear();
+        Object.keys(importedData).forEach(key => {
+          localStorage.setItem(key, importedData[key]);
+        });
+    
+        alert('Save data imported!');
+        location.reload()
+      } catch (error) {
+          alert("An error occurred during import.")
+          console.error(error)
+      }
+}
 function HardReset() {
     localStorage.clear(); // wipe localstorage
     location.reload(true)

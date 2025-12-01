@@ -129,6 +129,13 @@ body {
 .voidbutton:active {
 	transform: scale(0.98);
 } 
+.scaledcost1 {
+	color: yellow;
+}
+/* Make scaled cost text orange when the parent voidbutton is hovered */
+.voidbutton:hover .scaledcost1 {
+    color: orange;
+}
 #divider {
 	position: fixed;
 	left: 42%;
@@ -209,7 +216,7 @@ body {
 }
 #Time {
 	position: relative;
-	margin-top: 15vh;
+	top: 15vh;
 }
 #TimeTitle {
 	position: relative;
@@ -218,4 +225,9 @@ body {
 	font-family: 'Space Mono', monospace;
 	font-size: 50px;
 	text-align: center;
+}
+
+/* Remove default paragraph spacing inside the Time panel */
+#Time p {
+    margin: 0;
 }

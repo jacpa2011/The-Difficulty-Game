@@ -6,28 +6,56 @@ function makeGibberish(length = 10) {
   }
   return out;
 }
+
 function UpdateDisplay() {
+    const up = player.void.traceupgrades;
     const existencerank = document.getElementById('existencerank');
     existencerank.textContent = player.existencerank;
     const traces = document.getElementById('traces');
     traces.textContent = format(player.void.traces);
-    for(let i = 0; i < Object.keys(player.void.traceupgrades).length; i++) {
+    for(let i = 0; i < Object.keys(up).length; i++) {
         const upeff = document.getElementById(`up${i+1}-eff`);
         const upcost = document.getElementById(`up${i+1}-cost`);
+        if (up[i].scaling1 && up[i].level.gte(up[i].scaling1)) {
+            upcost.classList.add('scaledcost1');
+        } else {
+            upcost.classList.remove('scaledcost1');
+        }
         const uplvl = document.getElementById(`up${i+1}-lvl`);
         if (uplvl) {
-            uplvl.textContent = format(player.void.traceupgrades[i].level, 0);
+            uplvl.textContent = format(up[i].level, 0);
         }
-        upcost.textContent = format(player.void.traceupgrades[i].cost);
+        upcost.textContent = format(up[i].cost);
         if (upeff) {
-        upeff.textContent = format(player.void.traceupgrades[i].effect);
+        upeff.textContent = format(up[i].effect);
         }
+        if (i == 0) continue
+        if (up[i-1].hasOwnProperty("bought")) {
+            if (up[i-1].bought && i != 0) {
+                document.getElementById(`up${i+1}`).style.display = 'block';
+            } else {
+                document.getElementById(`up${i+1}`).style.display = 'none';
+            }
+        }
+        if (up[i-1].hasOwnProperty("level")) {
+            if (up[i-1].level.gte(1) && i != 0) {
+                document.getElementById(`up${i+1}`).style.display = 'block';
+            } else {
+                document.getElementById(`up${i+1}`).style.display = 'none';
+            }
+        }
+    }
+    if (up[2].bought) {
+        document.getElementById('Time').style.display = 'block';
+    } else {
+        document.getElementById('Time').style.display = 'none';
     }
     const pulses = document.getElementById('pulses');
     const seconds = document.getElementById('seconds');
     seconds.textContent = format(player.void.timepassed, 0);
     pulses.textContent = format(player.void.pulses, 0);
 }
+
 function UpdateStyles() {
     const progressBarUI = document.getElementById('action1pbui');
     const progressPercent = player.void.action1.progress.div(player.void.action1.duration).min(1).mul(100);
@@ -53,6 +81,7 @@ function CalculateUpgrade() {
     up[0].effect = new Decimal(2).pow(up[0].level);
     up[1].effect = player.void.action1.totalpressed.add(1).pow(0.33);
     up[0].cost = new Decimal(10).mul(new Decimal(2.25).pow(up[0].level));
+    if (up[0].level.gte(up[0].scaling1)) up[0].cost = up[0].cost.pow(1.1).mul(1.5)
     up[1].cost = new Decimal(50)
     up[2].cost = new Decimal(5000)
     for(let i = 0; i < Object.keys(player.void.traceupgrades).length; i++) {
